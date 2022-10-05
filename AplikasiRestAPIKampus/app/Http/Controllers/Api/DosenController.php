@@ -48,25 +48,12 @@ class DosenController extends Controller
         return new DosenResource(true, 'Data Post Berhasil Ditambahkan!', $post);
     }
 
-     /**
-     * show
-     *
-     * @param  mixed $post
-     * @return void
-     */
     public function show(Dosen $dosen)
     {
         //return single dosen as a resource
         return new DosenResource(true, 'Data dosen Ditemukan!', $dosen);
     }
 
-    /**
-     * update
-     *
-     * @param  mixed $request
-     * @param  mixed $post
-     * @return void
-     */
     public function update(Request $request, Dosen $dosen)
     {
         //define validation rules
@@ -108,12 +95,6 @@ class DosenController extends Controller
         return new DosenResource(true, 'Data dosen Berhasil Diubah!', $dosen);
     }
 
-    /**
-     * destroy
-     *
-     * @param  mixed $post
-     * @return void
-     */
     public function destroy(Dosen $dosen)
     {
         //delete dosen
