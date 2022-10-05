@@ -24,3 +24,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('logout');
+Route::apiResource('/dosen', App\Http\Controllers\Api\DosenController::class);
