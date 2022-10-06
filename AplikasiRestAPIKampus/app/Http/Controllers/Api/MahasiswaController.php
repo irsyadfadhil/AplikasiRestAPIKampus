@@ -12,20 +12,17 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        //get posts
         $Mahasiswas = Mahasiswa::latest()->paginate(5);
-
-        //return collection of posts as a resource
-        return new MahasiswaResource(true, 'List Data Posts', $Mahasiswas);
+        return new MahasiswaResource(true, 'List Data Mahasiswa', $Mahasiswas);
     }
 
     public function store(Request $request)
     {
         //define validation rules
         $validator = Validator::make($request->all(), [
-            'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'     => 'required',
-            'content'   => 'required',
+            'nama'              => 'required',
+            'nim'               => 'required',
+            'kode_mata_kuliah'  => 'required',
         ]);
 
         //check if validation fails
@@ -33,19 +30,15 @@ class MahasiswaController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
-
         //create post
-        $post = Mahasiswa::create([
-            'image'     => $image->hashName(),
-            'title'     => $request->title,
-            'content'   => $request->content,
+        $Mahasiswa = Mahasiswa::create([
+            'nama'               => $request->nama,
+            'nim'                => $request->nim,
+            'kode_mata_kuliah'   => $request->kode_mata_kuliah,
         ]);
 
         //return response
-        return new MahasiswaResource(true, 'Data Post Berhasil Ditambahkan!', $post);
+        return new MahasiswaResource(true, 'Data Mahasiswa Berhasil Ditambahkan!', $Mahasiswa);
     }
 
     public function show(Mahasiswa $Mahasiswa)
@@ -58,9 +51,9 @@ class MahasiswaController extends Controller
     {
         //define validation rules
         $validator = Validator::make($request->all(), [
-            'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'     => 'required',
-            'content'   => 'required',
+            'nama'              => 'required',
+            'nim'               => 'required',
+            'kode_mata_kuliah'  => 'required',
         ]);
 
         //check if validation fails
@@ -68,28 +61,12 @@ class MahasiswaController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //check if image is not empty
-        if ($request->hasFile('image')) {
-
-            //upload image
-            $image = $request->file('image');
-            $image->storeAs('public/Mahasiswas', $image->hashName());
-
-            //update Mahasiswa with new image
-            $Mahasiswa->update([
-                'image'     => $image->hashName(),
-                'title'     => $request->title,
-                'content'   => $request->content,
-            ]);
-
-        } else {
-
-            //update Mahasiswa without image
-            $Mahasiswa->update([
-                'title'     => $request->title,
-                'content'   => $request->content,
-            ]);
-        }
+         //update Mahasiswa without image
+        $Mahasiswa->update([
+            'nama'               => $request->nama,
+            'nim'                => $request->nim,
+            'kode_mata_kuliah'   => $request->kode_mata_kuliah,
+        ]);
 
         //return response
         return new MahasiswaResource(true, 'Data Mahasiswa Berhasil Diubah!', $Mahasiswa);

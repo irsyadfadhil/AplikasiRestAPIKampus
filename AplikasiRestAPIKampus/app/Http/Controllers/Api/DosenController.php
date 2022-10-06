@@ -12,20 +12,27 @@ class DosenController extends Controller
 {
     public function index()
     {
-        //get posts
         $dosens = Dosen::latest()->paginate(5);
-
-        //return collection of posts as a resource
-        return new DosenResource(true, 'List Data Posts', $dosens);
+        return new DosenResource(true, 'List Data Dosen', $dosens);
     }
 
     public function store(Request $request)
     {
         //define validation rules
         $validator = Validator::make($request->all(), [
-            'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'     => 'required',
-            'content'   => 'required',
+            'nama'      => 'required',
+            'username'      => 'required',
+            'nip'      => 'required',
+            'kode_mata_kuliah'      => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:10',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ],
         ]);
 
         //check if validation fails
@@ -33,19 +40,16 @@ class DosenController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
-
-        //create post
-        $post = Dosen::create([
-            'image'     => $image->hashName(),
-            'title'     => $request->title,
-            'content'   => $request->content,
+        $dosen = Dosen::create([
+            'nama'                  => $request->nama,
+            'nip'                   => $request->nip,
+            'kode_mata_kuliah'      => $request->kode_mata_kuliah,
+            'username'              => $request->username,
+            'password'              => bcrypt($request->password)
         ]);
 
         //return response
-        return new DosenResource(true, 'Data Post Berhasil Ditambahkan!', $post);
+        return new DosenResource(true, 'Data Post Berhasil Ditambahkan!', $dosen);
     }
 
     public function show(Dosen $dosen)
@@ -58,9 +62,19 @@ class DosenController extends Controller
     {
         //define validation rules
         $validator = Validator::make($request->all(), [
-            'image'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title'     => 'required',
-            'content'   => 'required',
+            'nama'                  => 'required',
+            'username'              => 'required',
+            'nip'                   => 'required',
+            'kode_mata_kuliah'      => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:10',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[0-9]/',      // must contain at least one digit
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ],
         ]);
 
         //check if validation fails
@@ -68,28 +82,14 @@ class DosenController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //check if image is not empty
-        if ($request->hasFile('image')) {
-
-            //upload image
-            $image = $request->file('image');
-            $image->storeAs('public/dosens', $image->hashName());
-
-            //update dosen with new image
-            $dosen->update([
-                'image'     => $image->hashName(),
-                'title'     => $request->title,
-                'content'   => $request->content,
-            ]);
-
-        } else {
-
-            //update dosen without image
-            $dosen->update([
-                'title'     => $request->title,
-                'content'   => $request->content,
-            ]);
-        }
+        //update dosen without image
+        $dosen->update([
+            'nama'                  => $request->nama,
+            'nip'                   => $request->nip,
+            'kode_mata_kuliah'      => $request->kode_mata_kuliah,
+            'username'              => $request->username,
+            'password'              => bcrypt($request->password)
+        ]);
 
         //return response
         return new DosenResource(true, 'Data dosen Berhasil Diubah!', $dosen);

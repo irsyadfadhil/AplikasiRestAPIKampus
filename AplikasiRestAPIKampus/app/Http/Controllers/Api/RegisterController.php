@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Dosen;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -20,7 +21,11 @@ class RegisterController extends Controller
         //set validation
         $validator = Validator::make($request->all(), [
             'name'      => 'required',
+            'username'      => 'required',
+            'nip'      => 'required',
+            'kode_mata_kuliah'      => 'required',
             'email'     => 'required|email|unique:users',
+            'role'      => 'required',
             // 'password'  => 'required|min:8||regex:/^[a-zA-Z]+$/u|confirmed'
             'password' => [
                 'required',
@@ -42,8 +47,20 @@ class RegisterController extends Controller
         $user = User::create([
             'name'      => $request->name,
             'email'     => $request->email,
+            'role'     => $request->role,
+            'username'              => $request->username,
             'password'  => bcrypt($request->password)
         ]);
+
+        //create Dosen
+        $dosen = Dosen::create([
+            'nama'                  => $request->name,
+            'nip'                   => $request->nip,
+            'kode_mata_kuliah'      => $request->kode_mata_kuliah,
+            'username'              => $request->username,
+            'password'              => bcrypt($request->password)
+        ]);
+
 
         //return response JSON user is created
         if($user) {
