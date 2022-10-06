@@ -17,7 +17,7 @@ class Mahasiswa extends Migration
             $table->id();
             $table->string('nama');
             $table->string('nim');
-            $table->string('kode_mata_kuliah');
+            $table->string('kode_data_mata_kuliah');
             $table->timestamps();
           });
     }

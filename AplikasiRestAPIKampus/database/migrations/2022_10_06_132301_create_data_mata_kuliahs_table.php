@@ -16,6 +16,7 @@ class CreateDataMataKuliahsTable extends Migration
         Schema::create('data_mata_kuliah', function (Blueprint $table) {
             $table->id();
             $table->string('kode_mata_kuliah');
+            $table->string('kode_data_mata_kuliah');
             $table->string('nim');
             $table->string('nip');
             $table->timestamps();

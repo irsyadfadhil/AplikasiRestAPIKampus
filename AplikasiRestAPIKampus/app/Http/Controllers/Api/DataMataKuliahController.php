@@ -22,6 +22,7 @@ class DataMataKuliahController extends Controller
         $validator = Validator::make($request->all(), [
             'nim'     => 'required',
             'kode_mata_kuliah'     => 'required',
+            'kode_data_mata_kuliah'     => 'required',
             'nip'   => 'required',
         ]);
 
@@ -34,6 +35,7 @@ class DataMataKuliahController extends Controller
         $mata_kuliah = DataMataKuliah::create([
             'nim'   => $request->nim,
             'kode_mata_kuliah'   => $request->kode_mata_kuliah,
+            'kode_data_mata_kuliah'   => $request->kode_data_mata_kuliah,
             'nip'   => $request->nip,
         ]);
 
@@ -53,6 +55,7 @@ class DataMataKuliahController extends Controller
         $validator = Validator::make($request->all(), [
             'nim'     => 'required',
             'kode_mata_kuliah'     => 'required',
+            'kode_data_mata_kuliah'     => 'required',
             'nip'   => 'required',
         ]);
 
@@ -65,6 +68,7 @@ class DataMataKuliahController extends Controller
         $mata_kuliah->update([
             'nim'   => $request->nim,
             'kode_mata_kuliah'   => $request->kode_mata_kuliah,
+            'kode_data_mata_kuliah'   => $request->kode_data_mata_kuliah,
             'nip'   => $request->nip,
         ]);
 

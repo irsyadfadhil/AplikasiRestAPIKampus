@@ -27,3 +27,5 @@ Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('
 Route::apiResource('/dosen', App\Http\Controllers\Api\DosenController::class);
 Route::apiResource('/mahasiswa', App\Http\Controllers\Api\MahasiswaController::class);
 Route::apiResource('/mata_kuliah', App\Http\Controllers\Api\MataKuliahController::class);
+Route::apiResource('/data_mata_kuliah', App\Http\Controllers\Api\DataMataKuliahController::class);
+

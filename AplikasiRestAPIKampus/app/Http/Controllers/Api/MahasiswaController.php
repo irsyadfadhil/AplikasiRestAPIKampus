@@ -22,7 +22,7 @@ class MahasiswaController extends Controller
         $validator = Validator::make($request->all(), [
             'nama'              => 'required',
             'nim'               => 'required',
-            'kode_mata_kuliah'  => 'required',
+            'kode_data_mata_kuliah'  => 'required',
         ]);
 
         //check if validation fails
@@ -34,7 +34,7 @@ class MahasiswaController extends Controller
         $Mahasiswa = Mahasiswa::create([
             'nama'               => $request->nama,
             'nim'                => $request->nim,
-            'kode_mata_kuliah'   => $request->kode_mata_kuliah,
+            'kode_data_mata_kuliah'   => $request->kode_data_mata_kuliah,
         ]);
 
         //return response
@@ -53,7 +53,7 @@ class MahasiswaController extends Controller
         $validator = Validator::make($request->all(), [
             'nama'              => 'required',
             'nim'               => 'required',
-            'kode_mata_kuliah'  => 'required',
+            'kode_data_mata_kuliah'  => 'required',
         ]);
 
         //check if validation fails
@@ -65,7 +65,7 @@ class MahasiswaController extends Controller
         $Mahasiswa->update([
             'nama'               => $request->nama,
             'nim'                => $request->nim,
-            'kode_mata_kuliah'   => $request->kode_mata_kuliah,
+            'kode_data_mata_kuliah'   => $request->kode_data_mata_kuliah,
         ]);
 
         //return response
