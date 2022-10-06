@@ -14,6 +14,22 @@ class DataMataKuliah extends Model
     protected $fillable = [
         'nim',
         'nip',
-        'kode_mata_kuliah'
+        'kode_mata_kuliah',
+        'kode_data_mata_kuliah'
     ];
+
+    public function dosen()
+    {
+        return $this->hasOne(Dosen::class, 'nip', 'nip');
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasOne(Mahasiswa::class, 'nim', 'nim');
+    }
+
+    public function mata_kuliah()
+    {
+        return $this->hasOne(MataKuliah::class, 'kode_mata_kuliah', 'kode_mata_kuliah');
+    }
 }

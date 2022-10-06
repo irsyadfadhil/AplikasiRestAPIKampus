@@ -14,7 +14,7 @@ class Mahasiswa extends Model
     protected $fillable = [
         'nama',
         'nim',
-        'kode_mata_kuliah',
+        'kode_data_mata_kuliah',
     ];
 }
 

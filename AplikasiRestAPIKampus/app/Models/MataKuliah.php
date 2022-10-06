@@ -16,4 +16,9 @@ class MataKuliah extends Model
         'kode_mata_kuliah',
         'waktu_mata_kuliah',
     ];
+
+    public function dosen()
+    {
+        return $this->hasMany(Dosen::class, 'kode_mata_kuliah', 'kode_mata_kuliah');
+    }
 }

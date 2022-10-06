@@ -12,7 +12,7 @@ class DataMataKuliahController extends Controller
 {
     public function index()
     {
-        $mata_kuliah = DataMataKuliah::latest()->paginate(5);
+        $mata_kuliah = DataMataKuliah::with('dosen','mahasiswa','mata_kuliah')->latest()->paginate(5);
         return new DataMataKuliahResource(true, 'List Data Mata Kuliah', $mata_kuliah);
     }
 
